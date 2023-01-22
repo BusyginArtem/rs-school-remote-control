@@ -25,7 +25,6 @@ const handleCommands = async (ws: WebSocket) => {
     const [cmd, ...args] = message.split(" ");
 
     const result = await COMMAND_HANDLERS[cmd as keyof ICommands](args);
-    // console.log("result ", `${cmd}${result ? ` ${result}` : ""}`);
 
     wsStream.write(`${cmd}${result ? ` ${result}` : ""}`);
 

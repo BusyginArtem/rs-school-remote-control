@@ -1,7 +1,9 @@
 import { mouse, Point, straightTo, Button } from "@nut-tree/nut-js";
+//
+import { MOUSE_SPEED } from "../constants.js";
 
 export default async ([radius]: number[]) => {
-  mouse.config.mouseSpeed = 500;
+  mouse.config.mouseSpeed = MOUSE_SPEED;
 
   const { x: mouseX, y: mouseY } = await mouse.getPosition();
 
