@@ -16,20 +16,24 @@ const COMMAND_HANDLERS: ICommands = {
 };
 
 const handleCommands = async (ws: WebSocket) => {
-  const wsStream = createWebSocketStream(ws, {
-    encoding: "utf8",
-    decodeStrings: false,
-  });
+  try {
+    const wsStream = createWebSocketStream(ws, {
+      encoding: "utf8",
+      decodeStrings: false,
+    });
 
-  wsStream.on("data", async (message) => {
-    const [cmd, ...args] = message.split(" ");
+    wsStream.on("data", async (message) => {
+      const [cmd, ...args] = message.split(" ");
 
-    const result = await COMMAND_HANDLERS[cmd as keyof ICommands](args);
+      const result = await COMMAND_HANDLERS[cmd as keyof ICommands](args);
 
-    wsStream.write(`${cmd}${result ? ` ${result}` : ""}`);
+      wsStream.write(`${cmd}${result ? ` ${result}` : ""}`);
 
-    console.log(`Executed: ${message}`);
-  });
+      console.log(`Executed: ${message}`);
+    });
+  } catch (error) {
+    ws.send(`Error: Something went wrong!`);
+  }
 };
 
 export default handleCommands;

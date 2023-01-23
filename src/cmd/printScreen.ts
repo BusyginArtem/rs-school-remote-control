@@ -23,6 +23,6 @@ export default async () => {
 
     return base64String.replace("data:image/png;base64,", "");
   } catch (error) {
-    console.error("error >>>>>>>>>>>>>.", error);
+    console.error(`Error: ${error.message}`);
   }
 };
